@@ -24,6 +24,7 @@ import RuleIcon from '@material-ui/icons/AssignmentTurnedIn';
 import MapIcon from '@material-ui/icons/MyLocation';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
+import GrpcIcon from '@material-ui/icons/ChildCare';
 import LogoFull from './LogoFull';
 import LogoIcon from './LogoIcon';
 import {
@@ -102,6 +103,7 @@ const Root: FC<{}> = ({ children }) => (
         to={graphiQLRouteRef.path}
         text={graphiQLRouteRef.title}
       />
+      <SidebarItem icon={GrpcIcon} to="grpc1" text="gRPC" />
       <SidebarSpace />
       <SidebarDivider />
       <SidebarThemeToggle />
