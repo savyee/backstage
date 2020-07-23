@@ -1,18 +1,4 @@
--/*
-- * Copyright 2020 Spotify AB
-- *
-- * Licensed under the Apache License, Version 2.0 (the "License");
-- * you may not use this file except in compliance with the License.
-- * You may obtain a copy of the License at
-- *
-- *     http://www.apache.org/licenses/LICENSE-2.0
-- *
-- * Unless required by applicable law or agreed to in writing, software
-- * distributed under the License is distributed on an "AS IS" BASIS,
-- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-- * See the License for the specific language governing permissions and
-- * limitations under the License.
-- */
+
 import React, { FC, useState, Suspense } from 'react';
 import { Tabs,
   Tab,
@@ -36,6 +22,11 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import CloseIcon from '@material-ui/icons/Close';
 
 import AceEditor from 'react-ace';
+import RunHelloClient from '../RunHelloClient';
+
+const path = require('path');
+const protoloader = require('@grpc/proto-loader');
+const grpc = require('grpc');
 
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
@@ -49,12 +40,16 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
   },
 }));
 
+
+
+
 const FetchResponse: FC<{}> = () => {
   const classes = useStyles();
 
+
   return (
     <div className={classes.root}>
-        <AceEditor />
+      <Button variant="contained">{RunHelloClient}</Button>
     </div>
   );
 };

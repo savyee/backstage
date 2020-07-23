@@ -43,6 +43,8 @@ import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import PlayIcon from '@material-ui/icons/PlayCircleFilled';
 import FetchResponse from '../FetchResponse';
+import RunHelloClient from '../RunHelloClient';
+
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
   root: {
@@ -103,9 +105,27 @@ const methods = [
   },
 ];
 
+
+
 const ExampleFetchComponent: FC<{}> = () => {
   const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
+  const [state, setState] = React.useState({
+    host: 'localhost',
+    port: 6565,
+    service: 'expediagroup.greeter.Greeter',
+    method: 'sayHello',
+    body: 'me',
+  });
+
+  console.log(state.body);
+  //const { host, port, service, method, body } = state;
+
+  const onSubmit = () => {
+    //setState({ ...state, [event.target.name]: event.target.checked });
+    alert('clicked');
+    RunHelloClient;
+  };
 
   return (
     <Paper>
@@ -117,14 +137,13 @@ const ExampleFetchComponent: FC<{}> = () => {
           <CardContent>
             <Grid container spacing={3} direction="column">
               <Grid item>
-              -   <TextField
--                  required
--                  id="standard-required"
--                  label="Host"
--                  defaultValue="localhost"
--                  variant="outlined"
--                />
-                 <Tex
+                <TextField
+                  required
+                  id="standard-required"
+                  label="Host"
+                  defaultValue="localhost"
+                  variant="outlined"
+                />
                 <TextField
                   required
                   id="standard-required"
@@ -158,7 +177,7 @@ const ExampleFetchComponent: FC<{}> = () => {
                   required
                   id="standard-required"
                   label="Method name"
-                  defaultValue="expediagroup.greeter.Greeter"
+                  defaultValue="sayHello"
                   variant="outlined"
                   value="bob"
                 >
@@ -175,6 +194,7 @@ const ExampleFetchComponent: FC<{}> = () => {
                   color="primary"
                   className={classes.button}
                   endIcon={<PlayIcon />}
+                  onClick={() => { onSubmit() }}
                 >
                   Send
                 </Button>
@@ -211,7 +231,6 @@ const ExampleFetchComponent: FC<{}> = () => {
                 Response
               </Typography>
               <Paper>
-                <FetchResponse />
                 <TextField
                   id="outlined-read-only-input"
                   multiline
@@ -229,7 +248,6 @@ const ExampleFetchComponent: FC<{}> = () => {
           </Grid>
         </div>
         <div />
-
         <Divider />
         <div className={classes.graphiQlWrapper}>
           <HeaderLabel label="Lifecycle" value="Alpha" />

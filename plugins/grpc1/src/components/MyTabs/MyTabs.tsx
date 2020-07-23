@@ -208,7 +208,7 @@ const MyTabs: FC<{}> = () => {
           </ListItemSecondaryAction>
         </ListItem>
       </List>
-      <GridList className={classes.gridList} cols={5}></GridList>
+      <GridList className={classes.gridList} cols={5}>
         <GridListTile>
           <GridListTileBar
             title="bob"
