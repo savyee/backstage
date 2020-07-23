@@ -124,7 +124,6 @@ const ExampleFetchComponent: FC<{}> = () => {
   const onSubmit = () => {
     //setState({ ...state, [event.target.name]: event.target.checked });
     alert('clicked');
-    RunHelloClient;
   };
 
   return (
@@ -215,7 +214,9 @@ const ExampleFetchComponent: FC<{}> = () => {
                 <Tab label="Request form" />
                 <Tab label="Raw JSON" />
               </Tabs>
-              <Paper>
+              <Paper>    
+                <RunHelloClient />;
+
                 <TextField
                   id="outlined-multiline-static"
                   multiline
