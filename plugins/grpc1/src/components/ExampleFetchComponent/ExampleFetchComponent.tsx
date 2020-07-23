@@ -85,22 +85,22 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
 
 const services = [
   {
-    value: 'USD',
+    value: 'expediagroup.greeter.Greeter',
     label: 'expediagroup.greeter.Greeter',
   },
   {
-    value: 'EUR',
+    value: 'expediagroup.helloworld.v1.HelloWorldAPI',
     label: 'expediagroup.helloworld.v1.HelloWorldAPI',
   },
 ];
 
 const methods = [
   {
-    value: 'USD',
+    value: 'SayHello',
     label: 'SayHello',
   },
   {
-    value: 'EUR',
+    value: 'SayHelloAgain',
     label: 'SayHelloAgain',
   },
 ];
@@ -112,18 +112,43 @@ const ExampleFetchComponent: FC<{}> = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [state, setState] = React.useState({
     host: 'localhost',
-    port: 6565,
-    service: 'expediagroup.greeter.Greeter',
-    method: 'sayHello',
+    port: '6565',
+    service: 'expediagroup.helloworld.v1.HelloWorldAPI',
+    method: 'SayHello',
     body: 'me',
   });
+  const handleChangeHost = (event) => {
+    setState(event.target.value);
+    //setState({ ...state, [event.target.name]: event.target.value });
+  };
+  const handleChangePort = (event) => {
+    //setState({ ...state, [event.target.name]: event.target.value });
+  };
+  const handleChangeService = (event) => {
+    console.log(event.target.value);
+    //setState(event.target.value);
+    //setState({ ...state, [state.service]: event.target.value });
+    state.service = event.target.value;
+    //setState(event.target.value);
+  };
+  const handleChangeMethod = (event) => {
+    console.log(event.target.value);
+    //setState({ ...state, [state.method]: event.target.value });
+    state.method = event.target.value;
+    //setState(event.target.value);
 
-  console.log(state.body);
+  };
+  const handleChange = (event) => {
+    //setState(event.target.value);
+    setState({ ...state, [event.target.name]: event.target.value });
+  };
+
+  //console.log(state.body);
   //const { host, port, service, method, body } = state;
 
   const onSubmit = () => {
-    //setState({ ...state, [event.target.name]: event.target.checked });
-    alert('clicked');
+    setState({ ...state, [event.target.name]: event.target.checked });
+    alert('clicked: '+state.method+","+state.service);
   };
 
   return (
@@ -138,17 +163,19 @@ const ExampleFetchComponent: FC<{}> = () => {
               <Grid item>
                 <TextField
                   required
-                  id="standard-required"
                   label="Host"
-                  defaultValue="localhost"
+                  //defaultValue='localhost'
                   variant="outlined"
+                  value={state.host}
+                  onChange={handleChangeHost}
                 />
                 <TextField
                   required
-                  id="standard-required"
                   label="Port"
-                  defaultValue="6565"
+                  //defaultValue='6565'
                   variant="outlined"
+                  value={state.port}
+                  onChange={handleChangePort}
                 />
               </Grid>
               <Grid item>
@@ -156,11 +183,11 @@ const ExampleFetchComponent: FC<{}> = () => {
                   fullWidth
                   select
                   required
-                  id="standard-required"
                   label="Service name"
-                  defaultValue="expediagroup.greeter.Greeter"
+                  //defaultValue='expediagroup.greeter.Greeter'
                   variant="outlined"
-                  value="bob"
+                  value={state.service}
+                  onChange={handleChangeService}
                 >
                   {services.map(option => (
                     <MenuItem key={option.value} value={option.value}>
@@ -174,11 +201,11 @@ const ExampleFetchComponent: FC<{}> = () => {
                   fullWidth
                   select
                   required
-                  id="standard-required"
                   label="Method name"
-                  defaultValue="sayHello"
                   variant="outlined"
-                  value="bob"
+                  //defaultValue='sayHello'
+                  value={state.method}
+                  onChange={handleChangeMethod}
                 >
                   {methods.map(option => (
                     <MenuItem key={option.value} value={option.value}>
@@ -215,7 +242,6 @@ const ExampleFetchComponent: FC<{}> = () => {
                 <Tab label="Raw JSON" />
               </Tabs>
               <Paper>    
-                <RunHelloClient />;
 
                 <TextField
                   id="outlined-multiline-static"
