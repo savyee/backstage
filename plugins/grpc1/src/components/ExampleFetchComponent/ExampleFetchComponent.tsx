@@ -42,6 +42,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import PlayIcon from '@material-ui/icons/PlayCircleFilled';
+import FetchResponse from '../FetchResponse';
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
   root: {
@@ -110,55 +111,20 @@ const ExampleFetchComponent: FC<{}> = () => {
     <Paper>
       <div className={classes.root}>
         <div className={classes.root}>
-          <GridList className={classes.gridList} cols={5}>
-            <GridListTile>
-              <GridListTileBar
-                title="bob"
-                classes={{
-                  root: classes.titleBar,
-                  title: classes.title,
-                }}
-                actionIcon={
-                  <IconButton>
-                    <StarBorderIcon className={classes.title} />
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-            <GridListTile>
-              <GridListTileBar
-                title="hello"
-                classes={{
-                  root: classes.titleBar,
-                  title: classes.title,
-                }}
-                actionIcon={
-                  <IconButton>
-                    <StarBorderIcon className={classes.title} />
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-            <GridListTile>
-              <GridListTileBar
-                title="greeter"
-                classes={{
-                  root: classes.titleBar,
-                  title: classes.title,
-                }}
-                actionIcon={
-                  <IconButton>
-                    <StarBorderIcon className={classes.title} />
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-          </GridList>
         </div>
+        <Divider />
         <Card>
           <CardContent>
             <Grid container spacing={3} direction="column">
               <Grid item>
+              -   <TextField
+-                  required
+-                  id="standard-required"
+-                  label="Host"
+-                  defaultValue="localhost"
+-                  variant="outlined"
+-                />
+                 <Tex
                 <TextField
                   required
                   id="standard-required"
@@ -245,6 +211,7 @@ const ExampleFetchComponent: FC<{}> = () => {
                 Response
               </Typography>
               <Paper>
+                <FetchResponse />
                 <TextField
                   id="outlined-read-only-input"
                   multiline

@@ -86,6 +86,7 @@ const ExampleComponent: FC<{}> = () => (
         </Grid>
       </Grid>
       <div>
+        <MyTabs />
         <ExampleFetchComponent />
       </div>
     </Content>

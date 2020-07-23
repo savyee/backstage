@@ -13,8 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { Tabs,
+    Tab,
+    Button,
+    makeStyles,
+    Typography,
+    Divider,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemSecondaryAction,
+  } from '@material-ui/core';
 import React, { FC, useState, Suspense } from 'react';
-import { Tabs, Tab, makeStyles, Typography, Divider } from '@material-ui/core';
 import { Progress, HeaderLabel } from '@backstage/core';
 import { BackstageTheme } from '@backstage/theme';
 
@@ -23,6 +33,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
   root: {
@@ -48,13 +59,25 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
+    height: '60px',
   },
   title: {
     color: theme.palette.primary.light,
   },
   titleBar: {
-    background:
-      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+    background: theme.palette.background.paper,
+  },
+  flexContainer: {
+     display: 'flex',
+     flexDirection: 'row',
+     padding: 0,
+     flexWrap: 'nowrap',
+     transform: 'translateZ(0)',
+   },
+ fakeTabs: {
+    button: 'true',
+    divider: 'true',
+    background: 'gray'
   },
 }));
 
@@ -63,7 +86,129 @@ const MyTabs: FC<{}> = () => {
 
   return (
     <div className={classes.root}>
-      <GridList className={classes.gridList} cols={2.5}>
+      <List className={classes.flexContainer}>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash1" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash2" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash3" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+           </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash4" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash5" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash6" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash76" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash8" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash9" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash10" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash11" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash12" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash13" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash14" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem className={classes.fakeTabs} button divider>
+          <ListItemText primary="Trash15" />
+          <ListItemSecondaryAction>
+            <IconButton edge="end">
+              <CloseIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+      </List>
+      <GridList className={classes.gridList} cols={5}></GridList>
         <GridListTile>
           <GridListTileBar
             title="bob"
@@ -73,7 +218,7 @@ const MyTabs: FC<{}> = () => {
             }}
             actionIcon={
               <IconButton>
-                <StarBorderIcon className={classes.title} />
+                <CloseIcon className={classes.title} />
               </IconButton>
             }
           />
@@ -87,7 +232,7 @@ const MyTabs: FC<{}> = () => {
             }}
             actionIcon={
               <IconButton>
-                <StarBorderIcon className={classes.title} />
+                <CloseIcon className={classes.title} />
               </IconButton>
             }
           />
@@ -100,8 +245,22 @@ const MyTabs: FC<{}> = () => {
               title: classes.title,
             }}
             actionIcon={
-              <IconButton>
-                <StarBorderIcon className={classes.title} />
+              <IconButton>                
+                <CloseIcon className={classes.title} />
+              </IconButton>
+            }
+          />
+          </GridListTile>
+          <GridListTile>
+            <GridListTileBar
+              title="greeter2"
+              classes={{
+                root: classes.titleBar,
+                title: classes.title,
+              }}
+              actionIcon={
+                <IconButton>
+                <CloseIcon className={classes.title} />
               </IconButton>
             }
           />
