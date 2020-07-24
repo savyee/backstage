@@ -29,7 +29,6 @@ import {
   CardContent,
   FormControl,
   InputLabel,
-  NativeSelect,
   FormHelperText,
   MenuItem,
 } from '@material-ui/core';
@@ -147,7 +146,7 @@ const ExampleFetchComponent: FC<{}> = () => {
   //const { host, port, service, method, body } = state;
 
   const onSubmit = () => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    //setState({ ...state, [event.target.name]: event.target.checked });
     alert('clicked: '+state.method+","+state.service);
   };
 

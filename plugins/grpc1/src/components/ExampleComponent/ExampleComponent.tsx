@@ -29,6 +29,7 @@ import {
 import { BackstageTheme } from '@backstage/theme';
 import ExampleFetchComponent from '../ExampleFetchComponent';
 import MyTabs from '../MyTabs';
+import MyFormContainer from '../MyFormContainer/MyFormContainer';
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
   root: {
@@ -87,7 +88,7 @@ const ExampleComponent: FC<{}> = () => (
       </Grid>
       <div>
         <MyTabs />
-        <ExampleFetchComponent />
+        <MyFormContainer />
       </div>
     </Content>
   </Page>
