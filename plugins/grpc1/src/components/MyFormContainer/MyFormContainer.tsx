@@ -17,9 +17,10 @@ import {
   MenuItem,
   Select,
 } from '@material-ui/core';
-import { Progress, HeaderLabel } from '@backstage/core';
+import { Progress, HeaderLabel, InfoCard } from '@backstage/core';
 import { BackstageTheme } from '@backstage/theme';
 import PlayIcon from '@material-ui/icons/PlayCircleFilled';
+import { Autocomplete } from '@material-ui/lab';
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
     root: {
@@ -59,7 +60,17 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
-      },
+    },
+    textBox: {
+        width: '100%',
+        //height: 300,
+    },
+    infoCard: {
+        width: '100%',
+    },
+    bodyResponse: {
+        width: '50%',
+    }
   }));
   
   const services = [
@@ -84,10 +95,6 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
     },
   ];
 
-
-
-
-  
 export default function MyFormContainer() {
   //const MyFormContainer: FC<{}> = () => {
     const classes = useStyles();
@@ -104,70 +111,6 @@ export default function MyFormContainer() {
         services: services,
     
     });
-
-        /* This lifecycle hook gets executed when the component mounts */
-/*
-    const handleChangeHost = (event) => {
-        let value = event.target.value;
-        setState(
-        prevState => ({
-            newCall: {
-            ...prevState.newCall,
-            host: value
-            }
-        }),
-        () => console.log(state.newCall)
-        );
-    }
-
-    const handleChangePort = (event) => {
-        let value = event.target.value;
-        setState(
-        prevState => ({
-            newCall: {
-            ...prevState.newCall,
-            port: value
-            }
-        }),
-        () => console.log(state.newCall)
-        );
-    }
-    */
-
-    const handleInput = (event) => {
-        let value = event.target.value;
-        let name = event.target.name;
-        console.log(event.target.value);
-        console.log(event.target.name);
-  /*      
-        setState(
-        prevState => ({
-            newUser: {
-            ...prevState.newCall,
-            [name]: value
-            }
-        }),
-        () => console.log(state.newCall)
-        );
-        */
-        
-       setState({ ...state, [event.target.name]: event.target.value });
-    }
-/*
-    const handleTextArea = (event) => {
-        console.log("Inside handleTextArea");
-        let value = event.target.value;
-        setState(
-        prevState => ({
-            newCall: {
-            ...prevState.newCall,
-            body: value
-            }
-        }),
-        () => console.log(state.newCall)
-        );
-    }
-    */
 
     const handleFormSubmit = () => {
         //event.preventDefault();
@@ -186,23 +129,8 @@ export default function MyFormContainer() {
         });
         });
 */
-        alert('clicked: '+userData.method+","+userData.service+","+userData.host+","+userData.port);
+        alert('clicked: '+userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body);
     }
-/*
-    handleClearForm = (event) => {
-        e.preventDefault();
-        this.setState({
-        newCall: {
-            host: "",
-            port: "",
-            gender: "",
-            skills: [],
-            about: ""
-        }
-        });
-    }
-    */
-
 
   const handleChangeHost = (event) => {
     setState({ ...state, [state.newCall.host]: event.target.value });
@@ -227,9 +155,13 @@ export default function MyFormContainer() {
     setState({ ...state, [state.newCall.method]: event.target.value });
     state.newCall.method = event.target.value;
     //setState(event.target.value);
-
   };
 
+  const handleChangeBody = (event) => {
+    console.log(event.target.value);
+    setState({ ...state, [state.newCall.body]: event.target.value });
+    state.newCall.body = event.target.value;  
+  };
 
 //onSubmit={handleFormSubmit}
 
@@ -328,50 +260,35 @@ export default function MyFormContainer() {
         <Divider />
         <div>
           <Grid container spacing={3} direction="row">
-            <Grid item>
-              <Tabs
-                classes={{ root: classes.tabs }}
-                value={tabIndex}
-                onChange={(_, value) => setTabIndex(value)}
-                indicatorColor="primary"
-              >
-                <Tab label="Request form" />
-                <Tab label="Raw JSON" />
-              </Tabs>
-              <Paper>    
-                <FormControl className={classes.formControl}>
-
-                    <TextField
-                    name={"body"}
-                    id="outlined-multiline-static"
-                    multiline
-                    rows={50}
-                    variant="outlined"
-                    fullWidth
-                    value={state.newCall.body}
-                    onChange={handleInput}
-                    />
-                </FormControl>
-              </Paper>
+            <Grid item className={classes.bodyResponse}>
+                <InfoCard title="Body (raw JSON)" className={classes.infoCard}>
+                        <TextField className={classes.textBox}
+                        name={"body"}
+                        id="outlined-multiline-static"
+                        multiline
+                        rows={15}
+                        variant="outlined"
+                        fullWidth
+                        value={state.newCall.body}
+                        onChange={handleChangeBody}
+                        />
+                </InfoCard>
             </Grid>
-            <Grid item>
-              <Typography variant="button" display="block" gutterBottom>
-                Response
-              </Typography>
-              <Paper>
-                <TextField
-                  id="outlined-read-only-input"
-                  multiline
-                  rows={50}
-                  label="Read Only"
-                  defaultValue="{name: me}"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  variant="outlined"
-                  fullWidth
-                />
-              </Paper>
+            <Grid item className={classes.bodyResponse}>
+                <InfoCard title="Response" className={classes.infoCard}>
+                        <TextField className={classes.textBox}
+                        id="outlined-read-only-input"
+                        multiline
+                        rows={15}
+                        label="Read Only"
+                        defaultValue="Press the send button to get a response! :D"
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        variant="outlined"
+                        fullWidth
+                        />
+                </InfoCard>
             </Grid>
           </Grid>
         </div>

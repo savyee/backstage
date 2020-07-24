@@ -74,20 +74,22 @@ const ExampleComponent: FC<{}> = () => (
       <HeaderLabel label="Lifecycle" value="Alpha" />
     </Header>
     <Content>
-      <ContentHeader title="Plugin title">
+      <ContentHeader title="gRPC Plugin :D">
         <SupportButton>A description of your plugin goes here.</SupportButton>
       </ContentHeader>
       <Grid container spacing={3} direction="column">
         <Grid item>
           <InfoCard title="Information card">
             <Typography variant="body1">
-              All content should be wrapped in a card like this.
+              Here is the gRPC plugin, where you can run your gRPC proto files and see the output!  
+              Just enter your host name and port, then we'll find your proto file and pre-populate the dropdowns with the services we found.  
+              Then you pick your service, and then the appropriate methods will show up.  
+              Select which one you want, see your code show up on the left, modify it, and send it to get a response on the right!
             </Typography>
           </InfoCard>
         </Grid>
       </Grid>
       <div>
-        <MyTabs />
         <MyFormContainer />
       </div>
     </Content>
