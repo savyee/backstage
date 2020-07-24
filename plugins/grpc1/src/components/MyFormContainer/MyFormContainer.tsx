@@ -186,7 +186,7 @@ export default function MyFormContainer() {
         });
         });
 */
-        alert('clicked: '+userData.method+","+userData.service);
+        alert('clicked: '+userData.method+","+userData.service+","+userData.host+","+userData.port);
     }
 /*
     handleClearForm = (event) => {
@@ -204,24 +204,28 @@ export default function MyFormContainer() {
     */
 
 
-   const handleChangeHost = (event) => {
-    setState(event.target.value);
-    //setState({ ...state, [event.target.name]: event.target.value });
+  const handleChangeHost = (event) => {
+    setState({ ...state, [state.newCall.host]: event.target.value });
+    state.newCall.host = event.target.value;
   };
+
   const handleChangePort = (event) => {
-    //setState({ ...state, [event.target.name]: event.target.value });
+    setState({ ...state, [state.newCall.port]: event.target.value });
+    state.newCall.port = event.target.value;  
   };
+
   const handleChangeService = (event) => {
     console.log(event.target.value);
     //setState(event.target.value);
     //setState({ ...state, [state.service]: event.target.value });
+    setState({ ...state, [state.newCall.service]: event.target.value });
     state.newCall.service = event.target.value;
     //setState(event.target.value);
   };
   const handleChangeMethod = (event) => {
     console.log(event.target.value);
     setState({ ...state, [state.newCall.method]: event.target.value });
-    //state.newCall.method = event.target.value;
+    state.newCall.method = event.target.value;
     //setState(event.target.value);
 
   };
@@ -248,7 +252,7 @@ export default function MyFormContainer() {
                     //defaultValue='localhost'
                     variant="outlined"
                     value={state.newCall.host}
-                    onChange={handleInput}
+                    onChange={handleChangeHost}
                     />
                 </FormControl>
                 <FormControl className={classes.formControl}>
@@ -259,7 +263,7 @@ export default function MyFormContainer() {
                     //defaultValue='6565'
                     variant="outlined"
                     value={state.newCall.port}
-                    onChange={handleInput}
+                    onChange={handleChangePort}
                     />
                 </FormControl>
               </Grid>
