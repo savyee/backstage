@@ -106,6 +106,7 @@ export default function MyFormContainer() {
             service: 'expediagroup.helloworld.v1.HelloWorldAPI',
             method: 'SayHello',
             body: 'me',
+            response: 'Press the send button to get a response! :D',
         },
         methods: methods,
         services: services,
@@ -130,7 +131,10 @@ export default function MyFormContainer() {
         });
 */
         alert('clicked: '+userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body);
-    }
+        let res = userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body;
+        setState({ ...state, [state.newCall.response]: res });
+        state.newCall.response = res;
+      }
 
   const handleChangeHost = (event) => {
     setState({ ...state, [state.newCall.host]: event.target.value });
@@ -281,7 +285,7 @@ export default function MyFormContainer() {
                         multiline
                         rows={15}
                         label="Read Only"
-                        defaultValue="Press the send button to get a response! :D"
+                        value={state.newCall.response}
                         InputProps={{
                             readOnly: true,
                         }}
