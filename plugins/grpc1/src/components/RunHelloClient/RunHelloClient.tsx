@@ -5,13 +5,17 @@ import {
 } from '@material-ui/core';
 import { BackstageTheme } from '@backstage/theme';
 
+/*
 import path from 'path';
 import protoloader from '@grpc/proto-loader';
 import grpc from 'grpc';
+*/
 
-//const path = require('path');
-//const protoloader = require('@grpc/proto-loader');
-//const grpc = require('grpc');
+/*
+const path = require('path');
+const protoloader = require('@grpc/proto-loader');
+const grpc = require('grpc');
+*/
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
   root: {
@@ -28,20 +32,30 @@ const RunHelloClient: FC<{}> = () => {
   console.log("in run hello client");
   const classes = useStyles();
 
-  
+  /*
   const protoPath = path.resolve(__dirname, '../proto/expediagroup/greeter/greeter_api.proto')
   const importPath = path.resolve(__dirname, '../proto');
+
+  console.log(protoPath);
+  console.log(importPath);
+
+  
   const packageDefinition = protoloader.loadSync(protoPath, {
     includeDirs: [importPath],
     enums: String,
   });
   
+  
+  
+
   const loadedApi = grpc.loadPackageDefinition(packageDefinition);
   const client = new loadedApi.expediagroup.greeter.Greeter('localhost:6565', grpc.credentials.createInsecure());
   client.SayHello({name: 'Savanna'}, (err, response) => {
     if (err) console.log(err);
     else(console.log(response));
   });
+  */
+  
   
   
   

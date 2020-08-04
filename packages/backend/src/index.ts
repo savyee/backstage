@@ -38,6 +38,7 @@ import scaffolder from './plugins/scaffolder';
 import sentry from './plugins/sentry';
 import proxy from './plugins/proxy';
 import techdocs from './plugins/techdocs';
+import grpc1 from './plugins/grpc1';
 import { PluginEnvironment } from './types';
 
 function makeCreateEnv(loadedConfigs: AppConfig[]) {
@@ -70,6 +71,7 @@ async function main() {
   const rollbarEnv = useHotMemoize(module, () => createEnv('rollbar'));
   const sentryEnv = useHotMemoize(module, () => createEnv('sentry'));
   const techdocsEnv = useHotMemoize(module, () => createEnv('techdocs'));
+  const grpc1Env = useHotMemoize(module, () => createEnv('grpc1'));
 
   const service = createServiceBuilder(module)
     .loadConfig(configReader)
@@ -80,6 +82,7 @@ async function main() {
     .addRouter('/auth', await auth(authEnv))
     .addRouter('/identity', await identity(identityEnv))
     .addRouter('/techdocs', await techdocs(techdocsEnv))
+    .addRouter('/grpc1', await grpc1(grpc1Env))
     .addRouter('/proxy', await proxy(proxyEnv));
 
   await service.start().catch(err => {

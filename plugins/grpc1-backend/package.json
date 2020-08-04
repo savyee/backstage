@@ -1,5 +1,5 @@
 {
-  "name": "@backstage/plugin-grpc1",
+  "name": "@backstage/plugin-grpc1-backend",
   "version": "0.1.1-alpha.14",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -27,6 +27,7 @@
     "@material-ui/core": "^4.9.1",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "4.0.0-alpha.45",
+    "grpc": "^1.24.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-use": "^14.2.0"

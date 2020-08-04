@@ -21,6 +21,8 @@ import { Progress, HeaderLabel, InfoCard } from '@backstage/core';
 import { BackstageTheme } from '@backstage/theme';
 import PlayIcon from '@material-ui/icons/PlayCircleFilled';
 import { Autocomplete } from '@material-ui/lab';
+//import RunHelloClient from '../../../../grpc1-backend/index';
+
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
     root: {
@@ -113,7 +115,7 @@ export default function MyFormContainer() {
     
     });
 
-    const handleFormSubmit = () => {
+    const handleFormSubmit = async() => {
         //event.preventDefault();
         let userData = state.newCall;
 /*
@@ -130,10 +132,50 @@ export default function MyFormContainer() {
         });
         });
 */
-        alert('clicked: '+userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body);
+        //alert('clicked: '+userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body);
+        
+        //const response = await fetch('http://localhost:7000/grpc1/grpc1');
+        //console.log(response);
+
+        //await fetch('http://localhost:7000/grpc1/grpc1');
+
+        const url = 'http://localhost:7000/grpc1/grpc1';
+        const body = {name: 'bob'};
+        // const body = {
+        //   grpcCall: {
+        //     "host": userData.host,
+        //     "port": userData.port,
+        //     "method": userData.method,
+        //     "service": userData.service,
+        //     "body": userData.body,
+        //   },
+        // };
+   
+        
+        const response = await fetch(url, {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, *cors, same-origin
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'same-origin', // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(body) // body data type must match "Content-Type" header
+        });
+
+       const resp = await response.json();
+       console.log("after");
+       console.log(resp);
+
+
+
         let res = userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body;
         setState({ ...state, [state.newCall.response]: res });
         state.newCall.response = res;
+        //var greet = RunHelloClient;
       }
 
   const handleChangeHost = (event) => {
