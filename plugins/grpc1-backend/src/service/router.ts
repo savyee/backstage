@@ -38,9 +38,9 @@ export function createRouter(): express.Router {
     });
 
     router.post('/grpc1', (req, res) => {
-        const { id } = req.params;
-        const query = req.query;
-        const response = RunHelloClient(req.body.name);
+        //const { id } = req.params;
+        //const query = req.query;
+        const response = RunHelloClient(req.body.host, req.body.port, req.body.method, req.body.service, req.body.body);
         response.then(result => {
             res.status(200).send(result);
 

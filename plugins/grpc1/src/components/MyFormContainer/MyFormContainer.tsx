@@ -132,7 +132,7 @@ export default function MyFormContainer() {
         });
         });
 */
-        //alert('clicked: '+userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body);
+        alert('clicked: '+userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body);
         
         //const response = await fetch('http://localhost:7000/grpc1/grpc1');
         //console.log(response);
@@ -140,16 +140,16 @@ export default function MyFormContainer() {
         //await fetch('http://localhost:7000/grpc1/grpc1');
 
         const url = 'http://localhost:7000/grpc1/grpc1';
-        const body = {name: 'bob'};
-        // const body = {
-        //   grpcCall: {
-        //     "host": userData.host,
-        //     "port": userData.port,
-        //     "method": userData.method,
-        //     "service": userData.service,
-        //     "body": userData.body,
-        //   },
-        // };
+        //const body = {name: 'bob'};
+        const body = {
+          //grpcCall: {
+            "host": userData.host,
+            "port": userData.port,
+            "method": userData.method,
+            "service": userData.service,
+            "body": userData.body,
+          //},
+        };
    
         
         const response = await fetch(url, {
@@ -173,7 +173,7 @@ export default function MyFormContainer() {
 
 
 
-        let res = userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body;
+        //let res = userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body;
         setState({ ...state, [state.newCall.response]: respBox });
         state.newCall.response = respBox;
         //var greet = RunHelloClient;

@@ -16,11 +16,11 @@ import { loadPackageDefinition, credentials } from 'grpc';
 
 
 //export default async function runClient(req, res, next) {
-export default function runClient(req, res, next) {
+export default function runClient(host, port, method, service, body) {
 
     console.log("doggo");
-    console.log("req: "+req);
-    console.log("res: "+res);
+    //console.log("req: "+req.body);
+    //console.log("res: "+res);
     const protoPath = resolve(__dirname, '../proto/expediagroup/greeter/greeter_api.proto')
     const importPath = resolve(__dirname, '../proto');
     
@@ -31,9 +31,9 @@ export default function runClient(req, res, next) {
     });
     
     const loadedApi = loadPackageDefinition(packageDefinition);
-    const client = new loadedApi.expediagroup.greeter.Greeter('localhost:6565', credentials.createInsecure());
+    const client = new loadedApi.expediagroup.greeter.Greeter(''+host+':'+port, credentials.createInsecure());
     return new Promise((good, bad) => {
-      client.SayHello({name: req}, (err, response) => {
+      client.SayHello({name: body}, (err, response) => {
         if (err) {console.log(err); bad(err)}
         else{console.log(response); good(response)};
         //res = response;
