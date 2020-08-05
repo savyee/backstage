@@ -21,18 +21,33 @@ export function createRouter(): express.Router {
         const { id } = req.params;
         const query = req.query;
         //const response = RunHelloClient();
-        //console.log(response);
+        console.log("I am from router.ts");
+
+
+        const response = RunHelloClient(req.body.value, req.body);
+        
+        response.then(result => {
+            console.log("processed = "+result);
+            res.status(200).send(result);
+
+        }, failure => res.status(500));
+
         //res.status(200).send(response);
-        res.status(200).json({greeting: 'Succesfully gotten'});
+        //res.status(200).json({greeting: 'Succesfully gotten'});
 
     });
 
     router.post('/grpc1', (req, res) => {
         const { id } = req.params;
         const query = req.query;
-        const response = RunHelloClient();
-        console.log(response)
-        res.status(200).send(response);
+        const response = RunHelloClient(req.body.name);
+        response.then(result => {
+            res.status(200).send(result);
+
+        }, failure => res.status(500));
+    
+
+        //console.log(response)
         //res.status(200).json({greeting: "Successfully posted"});
         //res.status(200).json({greeting: req.body});
         //RunHelloClient();

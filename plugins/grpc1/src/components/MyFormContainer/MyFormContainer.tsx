@@ -167,14 +167,15 @@ export default function MyFormContainer() {
         });
 
        const resp = await response.json();
-       console.log("after");
-       console.log(resp);
+       //console.log("after");
+       //console.log(resp);
+       const respBox = JSON.stringify(resp);
 
 
 
         let res = userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body;
-        setState({ ...state, [state.newCall.response]: res });
-        state.newCall.response = res;
+        setState({ ...state, [state.newCall.response]: respBox });
+        state.newCall.response = respBox;
         //var greet = RunHelloClient;
       }
 
