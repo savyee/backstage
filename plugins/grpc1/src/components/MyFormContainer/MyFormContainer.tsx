@@ -107,7 +107,7 @@ export default function MyFormContainer() {
             port: '6565',
             service: 'expediagroup.helloworld.v1.HelloWorldAPI',
             method: 'SayHello',
-            body: 'me',
+            body: '{name: me}',
             response: 'Press the send button to get a response! :D',
         },
         methods: methods,
@@ -150,6 +150,7 @@ export default function MyFormContainer() {
             "body": userData.body,
           //},
         };
+
    
         
         const response = await fetch(url, {
