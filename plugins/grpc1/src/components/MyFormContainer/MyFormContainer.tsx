@@ -97,6 +97,38 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
     },
   ];
 
+/*const serviceList = [
+  {
+    name: 'expediagroup.greeter.Greeter',
+    methods: [
+      {
+        name: 'SayHello'
+      },
+      {
+        name: 'SayHelloAgain'
+      }
+    ]
+  },
+  {
+    name: 'expediagroup.helloworld.v1.HelloWorldAPI',
+    methods: [
+      {
+        name: 'SayHello'
+      }
+    ]
+  }
+]*/
+
+type Service = {
+  value: string;
+  label: string;
+};
+
+type Method = {
+  value: string;
+  label: string;
+};
+
 export default function MyFormContainer() {
   //const MyFormContainer: FC<{}> = () => {
     const classes = useStyles();
@@ -110,10 +142,12 @@ export default function MyFormContainer() {
             body: '{name: me}',
             response: 'Press the send button to get a response! :D',
         },
-        methods: methods,
-        services: services,
-    
+        //methods: new Array<Method>(),
+        //services: new Array<Service>(),
+
     });
+    const [serviceList, setServiceList] = React.useState(new Array<Service>());
+    const [methodList, setMethodList] = React.useState(new Array<Method>());
 
     const handleFormSubmit = async() => {
         //event.preventDefault();
@@ -180,33 +214,37 @@ export default function MyFormContainer() {
         //var greet = RunHelloClient;
       }
 
-  const handleChangeHost = (event) => {
+  const handleChangeHost = (event: any) => {
     setState({ ...state, [state.newCall.host]: event.target.value });
     state.newCall.host = event.target.value;
   };
 
-  const handleChangePort = (event) => {
+  const handleChangePort = (event: any) => {
     setState({ ...state, [state.newCall.port]: event.target.value });
     state.newCall.port = event.target.value;  
   };
 
-  const handleChangeService = (event) => {
-    console.log(event.target.value);
-    //setState(event.target.value);
-    //setState({ ...state, [state.service]: event.target.value });
-    setState({ ...state, [state.newCall.service]: event.target.value });
-    state.newCall.service = event.target.value;
-    //setState(event.target.value);
-  };
-  const handleChangeMethod = (event) => {
-    console.log(event.target.value);
-    setState({ ...state, [state.newCall.method]: event.target.value });
-    state.newCall.method = event.target.value;
-    //setState(event.target.value);
+  //const requestServices(host: string, port: number) {}
+
+  const handleChangeService = (event: any) => {
+    changeService(event.target.value);
   };
 
-  const handleChangeBody = (event) => {
-    console.log(event.target.value);
+  const handleChangeMethod = (event: any) => {
+    changeMethod(event.target.value);
+  };
+
+  const changeService = (service: string) => {
+    state.newCall.service = service;
+    setMethodList(methods);
+    changeMethod(methods[0].label);
+  };
+
+  const changeMethod = (method: string) => {
+    state.newCall.method = method;
+  }
+
+  const handleChangeBody = (event: any) => {
     setState({ ...state, [state.newCall.body]: event.target.value });
     state.newCall.body = event.target.value;  
   };
@@ -246,21 +284,38 @@ export default function MyFormContainer() {
                     onChange={handleChangePort}
                     />
                 </FormControl>
+                <Button 
+                  variant="contained"
+                  color="primary" 
+                  style={{
+                    left: '8px',
+                    top: '8px',
+                    height: '55px',
+                    position:'relative'}
+                  }
+                  onClick={() => {
+                    setServiceList(services);
+                    changeService(services[0].label);
+                  }}
+                >
+                  Go
+                </Button>
               </Grid>
               <Grid item>
                 <FormControl className={classes.formControl}>
                     <TextField
-                    name={"service"}
-                    fullWidth
-                    select
-                    required
-                    label="Service name"
-                    //defaultValue='expediagroup.greeter.Greeter'
-                    variant="outlined"
-                    value={state.newCall.service}
-                    onChange={handleChangeService}
+                      name={"service"}
+                      fullWidth
+                      select
+                      required
+                      label="Service name"
+                      //defaultValue='expediagroup.greeter.Greeter'
+                      variant="outlined"
+                      value={state.newCall.service}
+                      onChange={handleChangeService}
+                      disabled={serviceList.length == 0}
                     >
-                    {services.map(option => (
+                    {serviceList.map(option => (
                         <MenuItem key={option.value} value={option.value}>
                         {option.label}
                         </MenuItem>
@@ -271,17 +326,18 @@ export default function MyFormContainer() {
               <Grid item>
                 <FormControl className={classes.formControl}>
                     <TextField
-                    name={"method"}
-                    fullWidth
-                    select
-                    required
-                    label="Method name"
-                    variant="outlined"
-                    //defaultValue='sayHello'
-                    value={state.newCall.method}
-                    onChange={handleChangeMethod}
+                      name={"method"}
+                      fullWidth
+                      select
+                      required
+                      label="Method name"
+                      variant="outlined"
+                      //defaultValue='sayHello'
+                      value={state.newCall.method}
+                      onChange={handleChangeMethod}
+                      disabled={methodList.length == 0}
                     >
-                    {methods.map(option => (
+                    {methodList.map(option => (
                         <MenuItem key={option.value} value={option.value}>
                         {option.label}
                         </MenuItem>
@@ -297,6 +353,7 @@ export default function MyFormContainer() {
                     className={classes.button}
                     endIcon={<PlayIcon />}
                     onClick={() => { handleFormSubmit() }}
+                    disabled={methodList.length == 0}
                     >
                     Send
                     </Button>
