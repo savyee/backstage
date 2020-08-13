@@ -3,7 +3,9 @@ import { Logger } from 'winston';
 import Router from 'express-promise-router';
 import express from 'express';
 
-import RunHelloClient from '../RunHelloClient';
+//import RunHelloClient from '../RunHelloClient';
+import RunHelloClient from '../RunHelloClient4';
+
 
 //const path = require('path');
 //const protoloader = require('@grpc/proto-loader');
@@ -24,7 +26,7 @@ export function createRouter(): express.Router {
         console.log("I am from router.ts");
 
 
-        const response = RunHelloClient(req.body.value, req.body);
+        const response = RunHelloClient(req.body.host, req.body.port, req.body.method, req.body.service, req.body.body);
         
         response.then(result => {
             console.log("processed = "+result);
@@ -42,8 +44,8 @@ export function createRouter(): express.Router {
         //const query = req.query;
         const response = RunHelloClient(req.body.host, req.body.port, req.body.method, req.body.service, req.body.body);
         response.then(result => {
+            console.log("in router: "+result);
             res.status(200).send(result);
-
         }, failure => res.status(500));
     
 
