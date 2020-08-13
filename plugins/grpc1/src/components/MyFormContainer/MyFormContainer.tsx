@@ -23,6 +23,12 @@ import PlayIcon from '@material-ui/icons/PlayCircleFilled';
 import { Autocomplete } from '@material-ui/lab';
 //import RunHelloClient from '../../../../grpc1-backend/index';
 
+// import MonacoEditor from 'react-monaco-editor';
+// import { ControlledEditor as MonacoEditor } from "@monaco-editor/react";
+// import Editor from "@monaco-editor/react";
+
+import { ControlledEditor } from "@monaco-editor/react";
+
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
     root: {
@@ -211,7 +217,15 @@ export default function MyFormContainer() {
     state.newCall.body = event.target.value;  
   };
 
-//onSubmit={handleFormSubmit}
+  const options = {
+    selectOnLineNumbers: true
+  };
+
+  const onChange = (e, newValue) => {
+    setState({ ...state, [state.newCall.body]: newValue });
+    state.newCall.body = newValue;
+    console.log('onChange', newValue, e);
+  };
 
     return (
       <form className="container-fluid" >
@@ -310,15 +324,15 @@ export default function MyFormContainer() {
           <Grid container spacing={3} direction="row">
             <Grid item className={classes.bodyResponse}>
                 <InfoCard title="Body (raw JSON)" className={classes.infoCard}>
-                        <TextField className={classes.textBox}
-                        name={"body"}
-                        id="outlined-multiline-static"
-                        multiline
-                        rows={15}
-                        variant="outlined"
-                        fullWidth
-                        value={state.newCall.body}
-                        onChange={handleChangeBody}
+                        <ControlledEditor
+                          width="800"
+                          height="90vh"
+                          language="javascript"
+                          theme="vs-dark"
+                          value={state.newCall.body}
+                          options={options}
+                          onChange={onChange}
+                          // editorDidMount={editorDidMount}
                         />
                 </InfoCard>
             </Grid>

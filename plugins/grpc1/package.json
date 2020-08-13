@@ -27,8 +27,11 @@
     "@material-ui/core": "^4.9.1",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "4.0.0-alpha.45",
+    "@monaco-editor/react": "^3.5.7",
+    "monaco-editor-webpack-plugin": "^1.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-monaco-editor": "^0.39.1",
     "react-use": "^14.2.0"
   },
   "devDependencies": {
