@@ -1,4 +1,4 @@
-import React, { FC, useState, Suspense } from 'react';
+import React, { FC } from 'react';
 import {
   Button,
   Paper,
@@ -23,6 +23,15 @@ import PlayIcon from '@material-ui/icons/PlayCircleFilled';
 import { Autocomplete } from '@material-ui/lab';
 //import RunHelloClient from '../../../../grpc1-backend/index';
 
+// import MonacoEditor from 'react-monaco-editor';
+// import { ControlledEditor as MonacoEditor } from "@monaco-editor/react";
+// import Editor from "@monaco-editor/react";
+
+import { ControlledEditor } from "@monaco-editor/react";
+
+type MyProps = {
+
+};
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
     root: {
@@ -75,28 +84,34 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
     }
   }));
   
-  const services = [
-    {
-      value: 'expediagroup.greeter.Greeter',
-      label: 'expediagroup.greeter.Greeter',
-    },
-    {
-      value: 'expediagroup.helloworld.v1.HelloWorldAPI',
-      label: 'expediagroup.helloworld.v1.HelloWorldAPI',
-    },
-  ];
+  // const services = [
+  //   {
+  //     value: 'expediagroup.greeter.Greeter',
+  //     label: 'expediagroup.greeter.Greeter',
+  //   },
+  //   {
+  //     value: 'expediagroup.helloworld.v1.HelloWorldAPI',
+  //     label: 'expediagroup.helloworld.v1.HelloWorldAPI',
+  //   },
+  // ];
   
-  const methods = [
-    {
-      value: 'SayHello',
-      label: 'SayHello',
-    },
-    {
-      value: 'SayHelloAgain',
-      label: 'SayHelloAgain',
-    },
-  ];
+  // const methods = [
+  //   {
+  //     value: 'SayHello',
+  //     label: 'SayHello',
+  //   },
+  //   {
+  //     value: 'SayHelloAgain',
+  //     label: 'SayHelloAgain',
+  //   },
+  // ];
 
+//export default MyFormContainer() {
+export const MyFormContainer: FC<MyProps> = ({
+}) => {
+
+
+<<<<<<< HEAD
 /*const serviceList = [
   {
     name: 'expediagroup.greeter.Greeter',
@@ -130,9 +145,11 @@ type Method = {
 };
 
 export default function MyFormContainer() {
+=======
+>>>>>>> 31b41b52ce24257525148de19cde92a724d36d20
   //const MyFormContainer: FC<{}> = () => {
     const classes = useStyles();
-    const [tabIndex, setTabIndex] = useState(0);
+    //const [tabIndex, setTabIndex] = useState(0);
     const [state, setState] = React.useState({
         newCall: {
             host: 'localhost',
@@ -142,12 +159,41 @@ export default function MyFormContainer() {
             body: '{name: me}',
             response: 'Press the send button to get a response! :D',
         },
+<<<<<<< HEAD
         //methods: new Array<Method>(),
         //services: new Array<Service>(),
 
+=======
+        services: [
+          {
+            value: 'expediagroup.greeter.Greeter',
+            label: 'expediagroup.greeter.Greeter',
+          },
+          {
+            value: 'expediagroup.helloworld.v1.HelloWorldAPI',
+            label: 'expediagroup.helloworld.v1.HelloWorldAPI',
+          },
+        ],
+        
+        methods:[
+          {
+            value: 'SayHello',
+            label: 'SayHello',
+          },
+          {
+            value: 'SayHelloAgain',
+            label: 'SayHelloAgain',
+          },
+        ],
+    
+>>>>>>> 31b41b52ce24257525148de19cde92a724d36d20
     });
     const [serviceList, setServiceList] = React.useState(new Array<Service>());
     const [methodList, setMethodList] = React.useState(new Array<Method>());
+
+    
+
+    const { newCall, methods, services } = state;
 
     const handleFormSubmit = async() => {
         //event.preventDefault();
@@ -185,8 +231,6 @@ export default function MyFormContainer() {
           //},
         };
 
-   
-        
         const response = await fetch(url, {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
           mode: 'cors', // no-cors, *cors, same-origin
@@ -201,10 +245,35 @@ export default function MyFormContainer() {
           body: JSON.stringify(body) // body data type must match "Content-Type" header
         });
 
-       const resp = await response.json();
+        const respJSON = await response.json();
+        console.log("meow: "+JSON.stringify(respJSON));
+
+        const respBox = JSON.stringify(respJSON);
+
+
+
+        
+        
+        // }).then(response => {
+        //   response.json().then(data => {
+        //       console.log("Successful" + JSON.stringify(data));
+        //   }).catch(error => alert(error.message));
+        //   });        
+        
+        //.then(response => response)
+        //.catch(error => alert(error.message));
+
+        //}).then(response => response.json)
+        //}).then(response => alert(JSON.stringify(response.json)))
+
+
+       //const resp = await response.json();
+       //const resp = JSON.stringify(response.json);
+       //console.log("response: "+resp);
+
        //console.log("after");
        //console.log(resp);
-       const respBox = JSON.stringify(resp);
+       //const respBox = JSON.stringify(resp);
 
 
 
@@ -249,7 +318,15 @@ export default function MyFormContainer() {
     state.newCall.body = event.target.value;  
   };
 
-//onSubmit={handleFormSubmit}
+  const options = {
+    selectOnLineNumbers: true
+  };
+
+  const onChange = (e, newValue) => {
+    setState({ ...state, [state.newCall.body]: newValue });
+    //state.newCall.body = newValue;
+    console.log('onChange', newValue, e);
+  };
 
     return (
       <form className="container-fluid" >
@@ -367,15 +444,15 @@ export default function MyFormContainer() {
           <Grid container spacing={3} direction="row">
             <Grid item className={classes.bodyResponse}>
                 <InfoCard title="Body (raw JSON)" className={classes.infoCard}>
-                        <TextField className={classes.textBox}
-                        name={"body"}
-                        id="outlined-multiline-static"
-                        multiline
-                        rows={15}
-                        variant="outlined"
-                        fullWidth
-                        value={state.newCall.body}
-                        onChange={handleChangeBody}
+                        <ControlledEditor
+                          width="800"
+                          height="90vh"
+                          language="javascript"
+                          theme="vs-dark"
+                          value={state.newCall.body}
+                          options={options}
+                          onChange={onChange}
+                          // editorDidMount={editorDidMount}
                         />
                 </InfoCard>
             </Grid>
@@ -408,4 +485,4 @@ export default function MyFormContainer() {
     );
   }
 
-//export default MyFormContainer;
+export default MyFormContainer;
