@@ -166,8 +166,19 @@ export default function MyFormContainer() {
           referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
           body: JSON.stringify(body) // body data type must match "Content-Type" header
         });
+        
+        
+        //.then(response => response)
+        //.catch(error => alert(error.message));
 
-       const resp = await response.json();
+        //}).then(response => response.json)
+        //}).then(response => alert(JSON.stringify(response.json)))
+
+
+       //const resp = await response.json();
+       const resp = JSON.stringify(response.json);
+       console.log("response: "+resp);
+
        //console.log("after");
        //console.log(resp);
        const respBox = JSON.stringify(resp);
