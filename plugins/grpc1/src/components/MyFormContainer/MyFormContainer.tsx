@@ -1,4 +1,4 @@
-import React, { FC, useState, Suspense } from 'react';
+import React, { FC } from 'react';
 import {
   Button,
   Paper,
@@ -29,6 +29,9 @@ import { Autocomplete } from '@material-ui/lab';
 
 import { ControlledEditor } from "@monaco-editor/react";
 
+type MyProps = {
+
+};
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
     root: {
@@ -81,32 +84,36 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
     }
   }));
   
-  const services = [
-    {
-      value: 'expediagroup.greeter.Greeter',
-      label: 'expediagroup.greeter.Greeter',
-    },
-    {
-      value: 'expediagroup.helloworld.v1.HelloWorldAPI',
-      label: 'expediagroup.helloworld.v1.HelloWorldAPI',
-    },
-  ];
+  // const services = [
+  //   {
+  //     value: 'expediagroup.greeter.Greeter',
+  //     label: 'expediagroup.greeter.Greeter',
+  //   },
+  //   {
+  //     value: 'expediagroup.helloworld.v1.HelloWorldAPI',
+  //     label: 'expediagroup.helloworld.v1.HelloWorldAPI',
+  //   },
+  // ];
   
-  const methods = [
-    {
-      value: 'SayHello',
-      label: 'SayHello',
-    },
-    {
-      value: 'SayHelloAgain',
-      label: 'SayHelloAgain',
-    },
-  ];
+  // const methods = [
+  //   {
+  //     value: 'SayHello',
+  //     label: 'SayHello',
+  //   },
+  //   {
+  //     value: 'SayHelloAgain',
+  //     label: 'SayHelloAgain',
+  //   },
+  // ];
 
-export default function MyFormContainer() {
+//export default MyFormContainer() {
+export const MyFormContainer: FC<MyProps> = ({
+}) => {
+
+
   //const MyFormContainer: FC<{}> = () => {
     const classes = useStyles();
-    const [tabIndex, setTabIndex] = useState(0);
+    //const [tabIndex, setTabIndex] = useState(0);
     const [state, setState] = React.useState({
         newCall: {
             host: 'localhost',
@@ -116,10 +123,33 @@ export default function MyFormContainer() {
             body: '{name: me}',
             response: 'Press the send button to get a response! :D',
         },
-        methods: methods,
-        services: services,
+        services: [
+          {
+            value: 'expediagroup.greeter.Greeter',
+            label: 'expediagroup.greeter.Greeter',
+          },
+          {
+            value: 'expediagroup.helloworld.v1.HelloWorldAPI',
+            label: 'expediagroup.helloworld.v1.HelloWorldAPI',
+          },
+        ],
+        
+        methods:[
+          {
+            value: 'SayHello',
+            label: 'SayHello',
+          },
+          {
+            value: 'SayHelloAgain',
+            label: 'SayHelloAgain',
+          },
+        ],
     
     });
+
+    
+
+    const { newCall, methods, services } = state;
 
     const handleFormSubmit = async() => {
         //event.preventDefault();
@@ -157,8 +187,6 @@ export default function MyFormContainer() {
           //},
         };
 
-   
-        
         const response = await fetch(url, {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
           mode: 'cors', // no-cors, *cors, same-origin
@@ -172,7 +200,21 @@ export default function MyFormContainer() {
           referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
           body: JSON.stringify(body) // body data type must match "Content-Type" header
         });
+
+        const respJSON = await response.json();
+        console.log("meow: "+JSON.stringify(respJSON));
+
+        const respBox = JSON.stringify(respJSON);
+
+
+
         
+        
+        // }).then(response => {
+        //   response.json().then(data => {
+        //       console.log("Successful" + JSON.stringify(data));
+        //   }).catch(error => alert(error.message));
+        //   });        
         
         //.then(response => response)
         //.catch(error => alert(error.message));
@@ -182,12 +224,12 @@ export default function MyFormContainer() {
 
 
        //const resp = await response.json();
-       const resp = JSON.stringify(response.json);
-       console.log("response: "+resp);
+       //const resp = JSON.stringify(response.json);
+       //console.log("response: "+resp);
 
        //console.log("after");
        //console.log(resp);
-       const respBox = JSON.stringify(resp);
+       //const respBox = JSON.stringify(resp);
 
 
 
@@ -234,7 +276,7 @@ export default function MyFormContainer() {
 
   const onChange = (e, newValue) => {
     setState({ ...state, [state.newCall.body]: newValue });
-    state.newCall.body = newValue;
+    //state.newCall.body = newValue;
     console.log('onChange', newValue, e);
   };
 
@@ -376,4 +418,4 @@ export default function MyFormContainer() {
     );
   }
 
-//export default MyFormContainer;
+export default MyFormContainer;
