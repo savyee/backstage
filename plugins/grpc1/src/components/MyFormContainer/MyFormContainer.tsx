@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState, Suspense } from 'react';
 import {
   Button,
   Paper,
@@ -84,55 +84,52 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
     }
   }));
   
-  // const services = [
-  //   {
-  //     value: 'expediagroup.greeter.Greeter',
-  //     label: 'expediagroup.greeter.Greeter',
-  //   },
-  //   {
-  //     value: 'expediagroup.helloworld.v1.HelloWorldAPI',
-  //     label: 'expediagroup.helloworld.v1.HelloWorldAPI',
-  //   },
-  // ];
+  const services = [
+    {
+      value: 'expediagroup.greeter.Greeter',
+      label: 'expediagroup.greeter.Greeter',
+    },
+    {
+      value: 'expediagroup.helloworld.v1.HelloWorldAPI',
+      label: 'expediagroup.helloworld.v1.HelloWorldAPI',
+    },
+  ];
   
-  // const methods = [
-  //   {
-  //     value: 'SayHello',
-  //     label: 'SayHello',
-  //   },
-  //   {
-  //     value: 'SayHelloAgain',
-  //     label: 'SayHelloAgain',
-  //   },
-  // ];
+  const methods = [
+    {
+      value: 'SayHello',
+      label: 'SayHello',
+    },
+    {
+      value: 'SayHelloAgain',
+      label: 'SayHelloAgain',
+    },
+  ];
 
-//export default MyFormContainer() {
-export const MyFormContainer: FC<MyProps> = ({
-}) => {
+function getServiceTree() {
+  return [
+    {
+      name: 'expediagroup.greeter.Greeter',
+      methods: [
+        {
+          name: 'SayHello'
+        },
+        {
+          name: 'SayHelloAgain'
+        }
+      ]
+    },
+    {
+      name: 'expediagroup.helloworld.v1.HelloWorldAPI',
+      methods: [
+        {
+          name: 'SayHello'
+        }
+      ]
+    }
+  ];
+}
 
-
-<<<<<<< HEAD
-/*const serviceList = [
-  {
-    name: 'expediagroup.greeter.Greeter',
-    methods: [
-      {
-        name: 'SayHello'
-      },
-      {
-        name: 'SayHelloAgain'
-      }
-    ]
-  },
-  {
-    name: 'expediagroup.helloworld.v1.HelloWorldAPI',
-    methods: [
-      {
-        name: 'SayHello'
-      }
-    ]
-  }
-]*/
 
 type Service = {
   value: string;
@@ -145,59 +142,24 @@ type Method = {
 };
 
 export default function MyFormContainer() {
-=======
->>>>>>> 31b41b52ce24257525148de19cde92a724d36d20
   //const MyFormContainer: FC<{}> = () => {
     const classes = useStyles();
-    //const [tabIndex, setTabIndex] = useState(0);
+    const [tabIndex, setTabIndex] = useState(0);
     const [state, setState] = React.useState({
-        newCall: {
-            host: 'localhost',
-            port: '6565',
-            service: 'expediagroup.helloworld.v1.HelloWorldAPI',
-            method: 'SayHello',
-            body: '{name: me}',
-            response: 'Press the send button to get a response! :D',
-        },
-<<<<<<< HEAD
-        //methods: new Array<Method>(),
-        //services: new Array<Service>(),
-
-=======
-        services: [
-          {
-            value: 'expediagroup.greeter.Greeter',
-            label: 'expediagroup.greeter.Greeter',
-          },
-          {
-            value: 'expediagroup.helloworld.v1.HelloWorldAPI',
-            label: 'expediagroup.helloworld.v1.HelloWorldAPI',
-          },
-        ],
-        
-        methods:[
-          {
-            value: 'SayHello',
-            label: 'SayHello',
-          },
-          {
-            value: 'SayHelloAgain',
-            label: 'SayHelloAgain',
-          },
-        ],
-    
->>>>>>> 31b41b52ce24257525148de19cde92a724d36d20
+      host: "localhost",
+      port: "6565",
+      service: "expediagroup.helloworld.v1.HelloWorldAPI",
+      method: "SayHello",
+      body: "{name: me}",
+      response: "Press the send button to get a response! :D"
     });
     const [serviceList, setServiceList] = React.useState(new Array<Service>());
     const [methodList, setMethodList] = React.useState(new Array<Method>());
-
-    
-
-    const { newCall, methods, services } = state;
+    let serviceTree = [];
 
     const handleFormSubmit = async() => {
         //event.preventDefault();
-        let userData = state.newCall;
+        let userData = state;
 /*
         fetch("http://example.com", {
         method: "POST",
@@ -231,6 +193,8 @@ export default function MyFormContainer() {
           //},
         };
 
+   
+        
         const response = await fetch(url, {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
           mode: 'cors', // no-cors, *cors, same-origin
@@ -245,88 +209,68 @@ export default function MyFormContainer() {
           body: JSON.stringify(body) // body data type must match "Content-Type" header
         });
 
-        const respJSON = await response.json();
-        console.log("meow: "+JSON.stringify(respJSON));
-
-        const respBox = JSON.stringify(respJSON);
-
-
-
-        
-        
-        // }).then(response => {
-        //   response.json().then(data => {
-        //       console.log("Successful" + JSON.stringify(data));
-        //   }).catch(error => alert(error.message));
-        //   });        
-        
-        //.then(response => response)
-        //.catch(error => alert(error.message));
-
-        //}).then(response => response.json)
-        //}).then(response => alert(JSON.stringify(response.json)))
-
-
-       //const resp = await response.json();
-       //const resp = JSON.stringify(response.json);
-       //console.log("response: "+resp);
-
+       const resp = await response.json();
        //console.log("after");
        //console.log(resp);
-       //const respBox = JSON.stringify(resp);
+       const respBox = JSON.stringify(resp);
 
 
 
         //let res = userData.method+","+userData.service+","+userData.host+","+userData.port+","+userData.body;
-        setState({ ...state, [state.newCall.response]: respBox });
-        state.newCall.response = respBox;
+        setState({ ...state, [state.response]: respBox });
+        state.response = respBox;
         //var greet = RunHelloClient;
       }
 
   const handleChangeHost = (event: any) => {
-    setState({ ...state, [state.newCall.host]: event.target.value });
-    state.newCall.host = event.target.value;
+    setState({ ...state, host: event.target.value });
+    //state.newCall.host = event.target.value;
   };
 
   const handleChangePort = (event: any) => {
-    setState({ ...state, [state.newCall.port]: event.target.value });
-    state.newCall.port = event.target.value;  
+    setState({ ...state, port: event.target.value });
+    //state.newCall.port = event.target.value;  
   };
 
-  //const requestServices(host: string, port: number) {}
+  const requestServices = () => {
+    serviceTree = getServiceTree();
+
+    const services = new Array<Service>();
+    for(const service of serviceTree) {
+      services.push({
+        label: service.name,
+        value: service.name
+      });
+    }
+    setServiceList(services);
+    if(services.length > 0) {
+      changeService(services[0].label);
+    }
+  }
 
   const handleChangeService = (event: any) => {
     changeService(event.target.value);
   };
 
   const handleChangeMethod = (event: any) => {
-    changeMethod(event.target.value);
+    changeMethod(state.service, event.target.value);
   };
 
   const changeService = (service: string) => {
-    state.newCall.service = service;
     setMethodList(methods);
-    changeMethod(methods[0].label);
+    changeMethod(service, methods[0].label);
   };
 
-  const changeMethod = (method: string) => {
-    state.newCall.method = method;
+  const changeMethod = (service: string, method: string) => {
+    setState({ ...state, service: service, method: method });
   }
 
   const handleChangeBody = (event: any) => {
-    setState({ ...state, [state.newCall.body]: event.target.value });
-    state.newCall.body = event.target.value;  
+    setState({ ...state, body: event.target.value });
+    //state.newCall.body = event.target.value;  
   };
 
-  const options = {
-    selectOnLineNumbers: true
-  };
-
-  const onChange = (e, newValue) => {
-    setState({ ...state, [state.newCall.body]: newValue });
-    //state.newCall.body = newValue;
-    console.log('onChange', newValue, e);
-  };
+//onSubmit={handleFormSubmit}
 
     return (
       <form className="container-fluid" >
@@ -346,7 +290,7 @@ export default function MyFormContainer() {
                     label="Host"
                     //defaultValue='localhost'
                     variant="outlined"
-                    value={state.newCall.host}
+                    value={state.host}
                     onChange={handleChangeHost}
                     />
                 </FormControl>
@@ -357,7 +301,7 @@ export default function MyFormContainer() {
                     label="Port"
                     //defaultValue='6565'
                     variant="outlined"
-                    value={state.newCall.port}
+                    value={state.port}
                     onChange={handleChangePort}
                     />
                 </FormControl>
@@ -370,10 +314,7 @@ export default function MyFormContainer() {
                     height: '55px',
                     position:'relative'}
                   }
-                  onClick={() => {
-                    setServiceList(services);
-                    changeService(services[0].label);
-                  }}
+                  onClick={requestServices}
                 >
                   Go
                 </Button>
@@ -386,9 +327,8 @@ export default function MyFormContainer() {
                       select
                       required
                       label="Service name"
-                      //defaultValue='expediagroup.greeter.Greeter'
                       variant="outlined"
-                      value={state.newCall.service}
+                      value={state.service}
                       onChange={handleChangeService}
                       disabled={serviceList.length == 0}
                     >
@@ -409,8 +349,7 @@ export default function MyFormContainer() {
                       required
                       label="Method name"
                       variant="outlined"
-                      //defaultValue='sayHello'
-                      value={state.newCall.method}
+                      value={state.method}
                       onChange={handleChangeMethod}
                       disabled={methodList.length == 0}
                     >
@@ -444,15 +383,15 @@ export default function MyFormContainer() {
           <Grid container spacing={3} direction="row">
             <Grid item className={classes.bodyResponse}>
                 <InfoCard title="Body (raw JSON)" className={classes.infoCard}>
-                        <ControlledEditor
-                          width="800"
-                          height="90vh"
-                          language="javascript"
-                          theme="vs-dark"
-                          value={state.newCall.body}
-                          options={options}
-                          onChange={onChange}
-                          // editorDidMount={editorDidMount}
+                        <TextField className={classes.textBox}
+                        name={"body"}
+                        id="outlined-multiline-static"
+                        multiline
+                        rows={15}
+                        variant="outlined"
+                        fullWidth
+                        value={state.body}
+                        onChange={handleChangeBody}
                         />
                 </InfoCard>
             </Grid>
@@ -463,7 +402,7 @@ export default function MyFormContainer() {
                         multiline
                         rows={15}
                         label="Read Only"
-                        value={state.newCall.response}
+                        value={state.response}
                         InputProps={{
                             readOnly: true,
                         }}
@@ -485,4 +424,4 @@ export default function MyFormContainer() {
     );
   }
 
-export default MyFormContainer;
+//export default MyFormContainer;
