@@ -42,7 +42,11 @@ export function createRouter(): express.Router {
     router.post('/grpc1', (req, res) => {
         //const { id } = req.params;
         //const query = req.query;
+        console.log("beginning of router")
+        //const req2 = JSON.parse(req.body);
+        //console.log("after parse");
         const response = RunHelloClient(req.body.host, req.body.port, req.body.method, req.body.service, req.body.body);
+        //const response = RunHelloClient(req2.host, req2.port, req2.method, req2.service, req2.body);
         response.then(result => {
             console.log("in router: "+result);
             res.status(200).send(result);

@@ -276,7 +276,7 @@ export const MyFormContainer: FC<MyProps> = ({
 
   const onChange = (e, newValue) => {
     setState({ ...state, [state.newCall.body]: newValue });
-    //state.newCall.body = newValue;
+    state.newCall.body = newValue;
     console.log('onChange', newValue, e);
   };
 
