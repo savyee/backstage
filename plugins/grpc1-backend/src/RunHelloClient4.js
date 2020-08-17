@@ -26,6 +26,8 @@ import Metadata from 'grpc/src/metadata';
 //export default async function runClient(req, res, next) {
 export default function runClient(host, port, method, service, body) {
 
+  //const Root = protobuf.Root;
+
     console.log("doggo");
     //console.log("req: "+req.body);
     //console.log("res: "+res);
@@ -39,13 +41,19 @@ export default function runClient(host, port, method, service, body) {
 
     //body = '{name: elmo}';
 
-    //const payload = JSON.parse(body);
+    const payload = JSON.parse(body);
+
+    //const payload = JSON.parse('{"name": "me"}');
 
     const protoPath = resolve(__dirname, '../proto/expediagroup/greeter/greeter_api.proto')
     const importPath = resolve(__dirname, '../proto');
 
-
-
+//left off here
+    // const Root = protobuf.Root
+    // const Type = protobuf.Type
+    // const Field = protobuf.Field
+    // const AwesomeMessage = new Type('AwesomeMessage').add(new Field('awesomeField', 1, 'string'))
+    // const root = new Root().define('awesomepackage').add(AwesomeMessage)
     
     
     const packageDefinition = loadSync(protoPath, {
@@ -74,6 +82,7 @@ export default function runClient(host, port, method, service, body) {
 
     const myClient = new clientBuilder(''+host+':'+port, grpc.credentials.createInsecure());
 
+    //{name: 'meep'},
 
 
     return new Promise((good, bad) => {
@@ -81,7 +90,7 @@ export default function runClient(host, port, method, service, body) {
         '/' + service + '/' + method, 
         prototype[method].requestSerialize,
         prototype[method].requestDeserialize,
-        {name: 'meep'},
+        payload,
         new Metadata(),
         {},
         (err, response) => {
