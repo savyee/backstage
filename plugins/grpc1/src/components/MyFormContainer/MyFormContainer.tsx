@@ -66,16 +66,24 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
   }
 }));
 
-function getServiceTree() {
+const sampleSchema = JSON.stringify({
+  name: "me"
+}, null, 2);
+
+function getServiceTree(host: string, port: string) {
+  console.log(`${host} ${port}`);
+
   return [
     {
       name: 'expediagroup.greeter.Greeter',
       methods: [
         {
-          name: 'SayHello'
+          name: 'SayHello',
+          schema: sampleSchema
         },
         {
-          name: 'SayHelloAgain'
+          name: 'SayHelloAgain',
+          schema: sampleSchema
         }
       ]
     },
@@ -83,7 +91,8 @@ function getServiceTree() {
       name: 'expediagroup.helloworld.v1.HelloWorldAPI',
       methods: [
         {
-          name: 'SayHello'
+          name: 'SayHello',
+          schema: sampleSchema
         }
       ]
     }
@@ -92,6 +101,7 @@ function getServiceTree() {
 
 type Method = {
   name: string
+  schema: any
 };
 
 type Service = {
@@ -103,7 +113,8 @@ const defaultService: Service = {
   name: "",
   methods: [
     {
-      name: ""
+      name: "",
+      schema: {}
     }
   ]
 };
@@ -115,8 +126,8 @@ export default function MyFormContainer() {
   const [host, setHost] = React.useState("localhost");
   const [port, setPort] = React.useState("6565");
   const [service, setService] = React.useState(defaultService);
-  const [method, setMethod] = React.useState(defaultService.methods[0]);
-  const [body, setBody] = React.useState("");
+  const [method, setMethod] = React.useState(service.methods[0]);
+  const [body, setBody] = React.useState(JSON.stringify(method.schema), null, 2);
   const [response, setResponse] = React.useState(defaultResponse);
   const [serviceList, setServiceList] = React.useState(new Array<Service>());
 
@@ -154,7 +165,7 @@ export default function MyFormContainer() {
     });
 
     const resp = await response.json();
-    const respBox = JSON.stringify(resp);
+    const respBox = JSON.stringify(resp, null, 2);
     setResponse(respBox);
   }
 
@@ -168,6 +179,7 @@ export default function MyFormContainer() {
 
   const changeMethod = (newMethod: Method) => {
     setMethod(newMethod);
+    setBody(newMethod.schema);
   };
 
   const changeService = (newService: Service) => {
@@ -176,7 +188,7 @@ export default function MyFormContainer() {
   };
 
   const requestServices = () => {
-    const services = getServiceTree();
+    const services = getServiceTree(host, port);
     setServiceList(services);
     changeService(services[0]);
   };
@@ -257,7 +269,6 @@ export default function MyFormContainer() {
                       value={service.name}
                       onChange={handleChangeService}
                       disabled={serviceList.length == 0}
-                      onClick={() => console.log(service.name)}
                     >
                       {serviceList.map((option, index) => (
                         <MenuItem key={index} value={option.name}>
@@ -279,7 +290,6 @@ export default function MyFormContainer() {
                       value={method.name}
                       onChange={handleChangeMethod}
                       disabled={serviceList.length == 0}
-                      onClick={() => console.log(method.name)}
                     >
                       {service.methods.map((option, index) => (
                         <MenuItem key={index} value={option.name}>
