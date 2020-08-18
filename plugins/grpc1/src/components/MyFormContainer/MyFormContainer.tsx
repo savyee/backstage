@@ -120,6 +120,7 @@ export default function MyFormContainer() {
   const classes = useStyles();
   const [host, setHost] = React.useState("localhost");
   const [port, setPort] = React.useState("6565");
+  const [errorText, setErrorText] = React.useState("");
   const [service, setService] = React.useState(defaultService);
   const [method, setMethod] = React.useState(service.methods[0]);
   const [body, setBody] = React.useState(method.schema);
@@ -182,7 +183,12 @@ export default function MyFormContainer() {
   const requestServices = () => {
     const services = getServiceTree(host, port);
     setServiceList(services);
-    changeService(services[0]);
+    if(services.length > 0) {
+      changeService(services[0]);
+      setErrorText("");
+    } else {
+      setErrorText("No services found");
+    }
   };
 
   const handleChangeService = (event: any) => {
@@ -223,6 +229,8 @@ export default function MyFormContainer() {
                       variant="outlined"
                       value={host}
                       onChange={handleChangeHost}
+                      error={errorText.length > 0}
+                      helperText={errorText}
                     />
                   </FormControl>
                   <FormControl className={classes.formControl}>
@@ -233,6 +241,7 @@ export default function MyFormContainer() {
                       variant="outlined"
                       value={port}
                       onChange={handleChangePort}
+                      error={errorText.length > 0}
                     />
                   </FormControl>
                   <Button 
