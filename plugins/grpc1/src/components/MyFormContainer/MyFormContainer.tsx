@@ -14,6 +14,7 @@ import {
 import { HeaderLabel, InfoCard } from '@backstage/core';
 import { BackstageTheme } from '@backstage/theme';
 import PlayIcon from '@material-ui/icons/PlayCircleFilled';
+import { ListServices } from '../../reflection';
 
 const useStyles = makeStyles<BackstageTheme>(theme => ({
   root: {
@@ -66,42 +67,9 @@ const useStyles = makeStyles<BackstageTheme>(theme => ({
   }
 }));
 
-const sampleSchema = JSON.stringify({
-  name: "me"
-}, null, 2);
-
-function getServiceTree(host: string, port: string) {
-  console.log(`${host} ${port}`);
-
-  return [
-    {
-      name: 'expediagroup.greeter.Greeter',
-      methods: [
-        {
-          name: 'SayHello',
-          schema: sampleSchema
-        },
-        {
-          name: 'SayHelloAgain',
-          schema: sampleSchema
-        }
-      ]
-    },
-    {
-      name: 'expediagroup.helloworld.v1.HelloWorldAPI',
-      methods: [
-        {
-          name: 'SayHello',
-          schema: sampleSchema
-        }
-      ]
-    }
-  ];
-}
-
 type Method = {
   name: string
-  schema: any
+  schema: string
 };
 
 type Service = {
@@ -109,12 +77,39 @@ type Service = {
   methods: Method[]
 };
 
+const sampleSchema = JSON.stringify({
+  name: "me"
+}, null, 2);
+
+function getServiceTree(host: string, port: string) {
+  const services = ListServices(host, port);
+  const serviceList = new Array<Service>();
+  for(const service of services) {
+    const methods = [
+      {
+        name: 'SayHello',
+        schema: sampleSchema
+      },
+      {
+        name: 'SayHelloAgain',
+        schema: sampleSchema
+      }
+    ];
+    serviceList.push({
+      name: service,
+      methods: methods
+    });
+  }
+
+  return serviceList;
+}
+
 const defaultService: Service = { 
   name: "",
   methods: [
     {
       name: "",
-      schema: {}
+      schema: ""
     }
   ]
 };
@@ -127,7 +122,7 @@ export default function MyFormContainer() {
   const [port, setPort] = React.useState("6565");
   const [service, setService] = React.useState(defaultService);
   const [method, setMethod] = React.useState(service.methods[0]);
-  const [body, setBody] = React.useState(JSON.stringify(method.schema), null, 2);
+  const [body, setBody] = React.useState(method.schema);
   const [response, setResponse] = React.useState(defaultResponse);
   const [serviceList, setServiceList] = React.useState(new Array<Service>());
 
@@ -139,9 +134,6 @@ export default function MyFormContainer() {
       port: port,
       body: body
     };
-
-    alert(JSON.stringify(userData));
-
     const url = 'http://localhost:7000/grpc1/grpc1';
     const requestBody = {
       "host": userData.host,
@@ -150,7 +142,7 @@ export default function MyFormContainer() {
       "service": userData.service,
       "body": userData.body,
     };
-    const response = await fetch(url, {
+    const resp = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, *cors, same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -164,8 +156,8 @@ export default function MyFormContainer() {
       body: JSON.stringify(requestBody) // body data type must match "Content-Type" header
     });
 
-    const resp = await response.json();
-    const respBox = JSON.stringify(resp, null, 2);
+    const respContent = await resp.json();
+    const respBox = JSON.stringify(respContent, null, 2);
     setResponse(respBox);
   }
 
@@ -194,7 +186,7 @@ export default function MyFormContainer() {
   };
 
   const handleChangeService = (event: any) => {
-    const findService = (serv: Service) => serv.name == event.target.value;
+    const findService = (serv: Service) => serv.name === event.target.value;
     const newService = serviceList.find(findService);
     if(newService) {
       changeService(newService);
@@ -202,7 +194,7 @@ export default function MyFormContainer() {
   };
 
   const handleChangeMethod = (event: any) => {
-    const findMethod = (mthd: Method) => mthd.name == event.target.value;
+    const findMethod = (mthd: Method) => mthd.name === event.target.value;
     const newMethod = service.methods.find(findMethod);
     if(newMethod) {
       changeMethod(newMethod);
@@ -268,7 +260,7 @@ export default function MyFormContainer() {
                       variant="outlined"
                       value={service.name}
                       onChange={handleChangeService}
-                      disabled={serviceList.length == 0}
+                      disabled={serviceList.length === 0}
                     >
                       {serviceList.map((option, index) => (
                         <MenuItem key={index} value={option.name}>
@@ -289,7 +281,7 @@ export default function MyFormContainer() {
                       variant="outlined"
                       value={method.name}
                       onChange={handleChangeMethod}
-                      disabled={serviceList.length == 0}
+                      disabled={serviceList.length === 0}
                     >
                       {service.methods.map((option, index) => (
                         <MenuItem key={index} value={option.name}>
@@ -307,7 +299,7 @@ export default function MyFormContainer() {
                       className={classes.button}
                       endIcon={<PlayIcon />}
                       onClick={() => { handleFormSubmit() }}
-                      disabled={serviceList.length == 0}
+                      disabled={serviceList.length === 0}
                     >
                       Send
                     </Button>
@@ -330,7 +322,7 @@ export default function MyFormContainer() {
                     fullWidth
                     value={body}
                     onChange={handleChangeBody}
-                    disabled={serviceList.length == 0}
+                    disabled={serviceList.length === 0}
                   />
                 </InfoCard>
               </Grid>
@@ -347,7 +339,7 @@ export default function MyFormContainer() {
                     }}
                     variant="outlined"
                     fullWidth
-                    disabled={serviceList.length == 0}
+                    disabled={serviceList.length === 0}
                   />
                 </InfoCard>
               </Grid>
